@@ -8,12 +8,13 @@ public static void main(String[] args) {
 		
 		//a posição ainda altera o resultado, não consegui modificar isso.
 		
-		h.setMinuto(45);
-		
-		h.setSegundo(32);	
-
-		h.setHora(22);
+		h.setSegundo(59);	
 		
 		System.out.println(h.getHora());
+		
+		h.incrementaSegundo();
+		
+		System.out.println(h);
+		
 	}
 }
