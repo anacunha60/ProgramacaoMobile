@@ -4,12 +4,16 @@ public class Principal {
 
 public static void main(String[] args) {
 		
-		Relogio r = new Relogio(28, 2, 2001);
-		System.out.println(r);
+		IHorario h = new HorarioNG();
 		
-		for(int i = 0; i < 86400 * 2; i++) {
-			r.tictac();
-			System.out.println(r);
-		}
+		//a posição ainda altera o resultado, não consegui modificar isso.
+		
+		h.setMinuto(45);
+		
+		h.setSegundo(32);	
+
+		h.setHora(22);
+		
+		System.out.println(h.getHora());
 	}
 }

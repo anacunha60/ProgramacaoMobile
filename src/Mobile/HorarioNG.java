@@ -1,25 +1,19 @@
 package Mobile;
 
-import java.io.Serializable;
-
-public class Horario implements IHorario, Serializable{
-
-	private byte hora; 
-	private byte minuto;
-	private byte segundo;
+public class HorarioNG implements IHorario{
 	
+	private int segundos;
+
 	@Override
 	public boolean ehUltimoSegundo() {
-		return hora == 23 && minuto == 59 && segundo == 59;
+		return segundos == 86399;
 	}
-
-	public Horario() {
-		hora = 0;
-		minuto = 0;
-		segundo = 0;
+	
+	public HorarioNG() {
+		segundos = 0;
 	}
-
-	public Horario(int hora, int minuto, int segundo) {
+	
+	public HorarioNG(int hora, int minuto, int segundo) {
 		setHora(hora);
 		setMinuto(minuto);
 		setSegundo(segundo);
@@ -27,80 +21,82 @@ public class Horario implements IHorario, Serializable{
 
 	@Override
 	public byte getHora() {
-		return hora;
+		return (byte)(segundos / 3600);
 	}
 
 	@Override
-	public void setHora(int hora){
+	public void setHora(int hora) {
 		if(hora >= 0 && hora <= 23) {
-			this.hora = (byte)hora;
-		}
-	}
-
-	@Override
-	public byte getMinuto() {
-		return minuto;
-	}
-
-	@Override
-	public void setMinuto(int minuto) {
-		if(minuto >= 0 && minuto <= 59) {
-			this.minuto = (byte)minuto;
+			this.segundos = hora * 3600;
 		}		
 	}
 
 	@Override
+	public byte getMinuto() {
+		return (byte)(this.segundos / 60);
+	}
+
+	@Override
+	public void setMinuto(int minutos) {
+		if(minutos >= 0 && minutos <= 59) {
+			this.segundos = minutos * 60;
+		}	
+	}
+
+	@Override
 	public byte getSegundo() {
-		return segundo;
+		return (byte)(this.segundos % 60);
 	}
 
 	@Override
 	public void setSegundo(int segundo) {
 		if(segundo >= 0 && segundo <= 59) {
-			this.segundo = (byte)segundo;
-		}		
+			this.segundos = segundo;
+		}	
+		
 	}
 	
-	@Override
 	public String toString() {
 		return this.getHora() + ":" + this.getMinuto() + ":" + this.getSegundo();
 	}
-	
+
 	@Override
 	public void incrementaSegundo() {
 		
-		byte s = (byte)(segundo + 1);
+	int s = this.getSegundo() + 1;
 		
 		if(s == 60) {
-			segundo = 0;
+			this.setSegundo(0);
 			incrementaMinuto();
 		}else {
-			segundo = s;
-		}
+			this.setSegundo(s);
+		}		
 	}
 
 	@Override
 	public void incrementaMinuto() {
-		int m = minuto + 1;
+		int m = this.getMinuto() + 1;
 		
 		if(m == 60) {
-			minuto = 0;
+			this.setMinuto(0);
 			incrementaHora();
 		}else {
-			minuto = (byte)m;
-		}		
+			this.setMinuto(m);;
+		}	
+		
 	}
 
 	@Override
 	public void incrementaHora() {
-		int h = hora + 1;
+		int h = this.getHora() + 1;
 		
 		if(h == 24) {
-			hora = 0;
+			this.setHora(0);
 			//incrementaDia();
 		}else {
-			hora = (byte)h;
+			this.setHora(h);
 		}
 		
 	}
+
 }

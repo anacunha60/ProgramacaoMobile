@@ -4,7 +4,7 @@ public class Relogio {
 
 	
 	private Data d;
-	private Horario h;
+	private IHorario h;
 	
 	public Relogio(int dia, int mes, int ano) {
 		d = new Data(dia, mes, ano);
@@ -20,7 +20,7 @@ public class Relogio {
 		this(data.getDia(), data.getMes(), data.getAno());
 	}
 
-	public Relogio(Data data, Horario horario) {
+	public Relogio(Data data, IHorario horario) {
 		this(data.getDia(), data.getMes(), data.getAno(), horario.getHora(), horario.getMinuto(), horario.getSegundo());
 	}
 
