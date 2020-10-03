@@ -9,10 +9,6 @@ public class HorarioNG implements IHorario{
 		return segundos == 86399;
 	}
 	
-	public HorarioNG() {
-		segundos = 0;
-	}
-	
 	public HorarioNG(int hora, int minuto, int segundo) {
 		setHora(hora);
 		setMinuto(minuto);
@@ -27,19 +23,21 @@ public class HorarioNG implements IHorario{
 	@Override
 	public void setHora(int hora) {
 		if(hora >= 0 && hora <= 23) {
-			this.segundos = hora * 3600;
+			this.segundos -= getHora();
+			this.segundos += hora * 3600;
 		}		
 	}
 
 	@Override
 	public byte getMinuto() {
-		return (byte)(this.segundos / 60);
+		return (byte)(this.segundos / 60 % 60);
 	}
 
 	@Override
 	public void setMinuto(int minutos) {
 		if(minutos >= 0 && minutos <= 59) {
-			this.segundos = minutos * 60;
+			this.segundos -= getMinuto();
+			this.segundos += minutos * 60;
 		}	
 	}
 
@@ -51,52 +49,42 @@ public class HorarioNG implements IHorario{
 	@Override
 	public void setSegundo(int segundo) {
 		if(segundo >= 0 && segundo <= 59) {
-			this.segundos = segundo;
+			this.segundos -= getSegundo();
+			this.segundos += segundo;
 		}	
 		
-	}
-	
-	public String toString() {
-		return this.getHora() + ":" + this.getMinuto() + ":" + this.getSegundo();
 	}
 
 	@Override
 	public void incrementaSegundo() {
 		
-	int s = this.getSegundo() + 1;
+	int s = this.segundos + 1;
 		
-		if(s == 60) {
-			this.setSegundo(0);
-			incrementaMinuto();
+		if(s == 86400) {
+			this.segundos = 0;
 		}else {
-			this.setSegundo(s);
+			this.segundos = s;
 		}		
 	}
 
 	@Override
 	public void incrementaMinuto() {
-		int m = this.getMinuto() + 1;
-		
-		if(m == 60) {
-			this.setMinuto(0);
-			incrementaHora();
-		}else {
-			this.setMinuto(m);;
-		}	
+		for(int i = 0; i < 60; i++) {
+			incrementaSegundo();
+		}
 		
 	}
 
 	@Override
 	public void incrementaHora() {
-		int h = this.getHora() + 1;
-		
-		if(h == 24) {
-			this.setHora(0);
-			//incrementaDia();
-		}else {
-			this.setHora(h);
+		for(int i = 0; i < 3600; i++) {
+			incrementaSegundo();
 		}
 		
+	}
+	
+	public String toString() {
+		return this.getHora() + ":" + this.getMinuto() + ":" + this.getSegundo();
 	}
 
 }
