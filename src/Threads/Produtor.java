@@ -27,7 +27,7 @@ public class Produtor implements Runnable{
 				sharedLocation.blockingPut(i);//configura valor no buffer
 				
 				sum += i;//incrementa soma de valores
-				System.out.printf("\t\t%2d%n", sum);
+				//System.out.printf("\t\t%2d%n", sum);
 				
 			}
 			catch(InterruptedException exception) {

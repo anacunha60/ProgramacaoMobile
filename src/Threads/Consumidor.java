@@ -28,7 +28,7 @@ public class Consumidor implements Runnable{
 				Thread.sleep(generator.nextInt(3000));
 				sum += sharedLocation.blockingGet();
 				
-				System.out.printf("\t\t\t%2d%n", sum);
+				//System.out.printf("\t\t\t%2d%n", sum);
 			}
 			catch(InterruptedException exception) {
 				
